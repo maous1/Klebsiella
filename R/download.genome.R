@@ -3,7 +3,7 @@
 #' @param species a vector of character including the species that we want to analyze
 #' @param maxOrganism a value with the number of genome we want to download for each species
 #' @param indextostart : the index to restart the analysis. for example, if you interupted the analysis after 20 species, you can specify indextorestart=21
-#' @param accessionDir the directory where the accession list can be found
+#' @param accessionDir the directory where the accession files can be found
 #' @param outDir The output directory
 #' @return
 #' @export

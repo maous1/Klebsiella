@@ -1,19 +1,20 @@
 #' A function to summarize the presence of some genes based on annotation
 #'
-#' @param bacteria.table
-#' @param annotation.list
-#' @param collicin
+#' @param bacteria.table : the bacteria table
+#' @param annotationDir the directory where the annotation list can be found
+#' @param collicin the collicin data.frame
 #'
 #' @return
 #' @export
 #'
 #' @examples
 
-analyse.annotation <- function(bacteria.table,annotation.list,collicin)
+analyse.annotation <- function(bacteria.table,collicin,annotationDir)
 {
 
   correspondance.organism.subgroup <- bacteria.table%>%group_by(Organism) %>% count(Organism, SubGroup) %>% slice(which.max(n)) %>% rename(species=Organism)
 
+  annotation.list <- list.files(annotationDir,full.names = T,recursive = T)
   annotation.list.name <- gsub(annotation.list,pattern = '.csv',replacement = '')
   annotation.list.name <- gsub(annotation.list.name,pattern = '03-annotation//',replacement = '')
 

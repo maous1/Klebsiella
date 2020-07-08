@@ -4,10 +4,14 @@
 \alias{analyse.annotation}
 \title{A function to summarize the presence of some genes based on annotation}
 \usage{
-analyse.annotation(bacteria.table, annotation.list, collicin)
+analyse.annotation(bacteria.table, collicin, annotationDir)
 }
 \arguments{
-\item{collicin}{}
+\item{bacteria.table}{: the bacteria table}
+
+\item{collicin}{the collicin data.frame}
+
+\item{annotationDir}{the directory where the annotation list can be found}
 }
 \value{
 

@@ -13,7 +13,7 @@ download.genome(species, maxOrganism, indextostart, accessionDir, outDir)
 
 \item{indextostart}{: the index to restart the analysis. for example, if you interupted the analysis after 20 species, you can specify indextorestart=21}
 
-\item{accessionDir}{the directory where the accession list can be found}
+\item{accessionDir}{the directory where the accession files can be found}
 
 \item{outDir}{The output directory}
 }
