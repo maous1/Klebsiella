@@ -2,6 +2,7 @@
 
 export(Gram)
 export(analyse.annotation)
+export(compute.consensus.sequence)
 export(download.accession)
 export(download.annotation)
 export(download.genome)
