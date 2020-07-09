@@ -11,7 +11,9 @@
 
 analyse.annotation <- function(bacteria.table,collicin,annotationDir)
 {
-
+  library(taxize)
+  library(tibble)
+  library(rapportools)
   correspondance.organism.subgroup <- bacteria.table%>%group_by(Organism) %>% dplyr::count(Organism, SubGroup) %>% dplyr::slice(which.max(n)) %>% dplyr::rename(species=Organism)
 
   annotation.list <- list.files(annotationDir,full.names = T,recursive = T)
@@ -50,12 +52,12 @@ analyse.annotation <- function(bacteria.table,collicin,annotationDir)
 
   positive <- itis_downstream(id =956097 , downto="phylum")
   negative <- itis_downstream(id =956096 , downto="phylum")
-  presence.summary.subgroup = presence.summary.subgroup%>% add_column(.,SubGroup)
+  presence.summary.subgroup = presence.summary.subgroup%>% add_column(.,parentname=rep("",length(presence.summary.subgroup$SubGroup)))
   for (i in 1:length(presence.summary.subgroup$SubGroup)) {
-    if (isEmpty(grep(toupper(paste(positive$taxonname,collapse='|')),toupper(presence.summary.subgroup$SubGroup[i])))) {
+    if (is.empty(grep(toupper(paste(positive$taxonname,collapse='|')),toupper(presence.summary.subgroup$SubGroup[i])))) {
       presence.summary.subgroup$parentname[i]="negibacteria"
     }
-    if (isEmpty(grep(toupper(paste(negative$taxonname,collapse='|')),toupper(presence.summary.subgroup$SubGroup[i])))) {
+    if (is.empty(grep(toupper(paste(negative$taxonname,collapse='|')),toupper(presence.summary.subgroup$SubGroup[i])))) {
       presence.summary.subgroup$parentname[i]="Posibacteria"
     }
   }
@@ -65,3 +67,4 @@ analyse.annotation <- function(bacteria.table,collicin,annotationDir)
 
   return(toreturn)
 }
+
