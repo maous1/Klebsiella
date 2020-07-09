@@ -44,6 +44,22 @@ analyse.annotation <- function(bacteria.table,collicin,annotationDir)
   presence.summary.subgroup <- full_join(presence.summary.subgroup.n,presence.summary.subgroup.mean,by="SubGroup")
   presence.summary.subgroup <- presence.summary.subgroup %>% rename_all(funs(gsub("_MEAN", "", .)))
 
+
+
+  ##### Positive ou negative
+
+  positive <- itis_downstream(id =956097 , downto="phylum")
+  negative <- itis_downstream(id =956096 , downto="phylum")
+  presence.summary.subgroup = presence.summary.subgroup%>% add_column(.,SubGroup)
+  for (i in 1:length(presence.summary.subgroup$SubGroup)) {
+    if (isEmpty(grep(toupper(paste(positive$taxonname,collapse='|')),toupper(presence.summary.subgroup$SubGroup[i])))) {
+      presence.summary.subgroup$parentname[i]="negibacteria"
+    }
+    if (isEmpty(grep(toupper(paste(negative$taxonname,collapse='|')),toupper(presence.summary.subgroup$SubGroup[i])))) {
+      presence.summary.subgroup$parentname[i]="Posibacteria"
+    }
+  }
+
   toreturn <- list(presence.summary,presence.summary.subgroup)
   names(toreturn) <- c('summmary at species level','summary at phylum level')
 
