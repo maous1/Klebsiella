@@ -9,14 +9,14 @@
 Gram <- function(presence.summary.subgroup)
   {
   library(taxize)
-  library(rapportools)
+  library(pracma)
   positive <- itis_downstream(id =956097 , downto="phylum")
   negative <- itis_downstream(id =956096 , downto="phylum")
   for (i in 1:length(presence.summary.subgroup$Phylum_n)) {
-    if (is.empty(grep(toupper(paste(positive$taxonname,collapse='|')),toupper(presence.summary.subgroup$Phylum_n[i])))) {
+    if (isempty(grep(toupper(paste(positive$taxonname,collapse='|')),toupper(presence.summary.subgroup$Phylum_n[i])))) {
       presence.summary.subgroup$Phylum_n[i]=paste(presence.summary.subgroup$Phylum_n[i],"; Neg")
     }
-    if (is.empty(grep(toupper(paste(negative$taxonname,collapse='|')),toupper(presence.summary.subgroup$Phylum_n[i])))) {
+    if (isempty(grep(toupper(paste(negative$taxonname,collapse='|')),toupper(presence.summary.subgroup$Phylum_n[i])))) {
       presence.summary.subgroup$Phylum_n[i]=paste(presence.summary.subgroup$Phylum_n[i],"; Pos")
     }
   }
