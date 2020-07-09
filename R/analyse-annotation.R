@@ -33,16 +33,16 @@ analyse.annotation <- function(bacteria.table,collicin,annotationDir)
 
   ##### summary at bacteria species
 
-  presence.summary.n <- presence %>% group_by(species) %>% summarise(n=n())
-  presence.summary.mean <- presence %>% group_by(species) %>% select(-species) %>% summarise_all(.funs = list(MEAN = ~ round(mean(x = .,na.rm=T),2)))
+  presence.summary.n <- presence %>% group_by(species) %>% dplyr::summarise(n=n())
+  presence.summary.mean <- presence %>% group_by(species) %>% select(-species) %>% dplyr::summarise_all(.funs = list(MEAN = ~ round(mean(x = .,na.rm=T),2)))
   presence.summary <- full_join(presence.summary.n,presence.summary.mean,by='species')
   presence.summary <- presence.summary %>% rename_all(funs(gsub("_MEAN", "", .)))
 
   ##### summary at phylum level
 
   presence.summary <- correspondance.organism.subgroup %>% select(-n) %>% right_join(presence.summary,by='species')
-  presence.summary.subgroup.n <- presence.summary %>% group_by(SubGroup) %>% summarise(n=n())
-  presence.summary.subgroup.mean <- presence.summary %>% group_by(SubGroup) %>% select(-c(n,species,SubGroup)) %>% summarise_all(.funs = list(MEAN = ~ round(mean(x = .,na.rm=T),2)))
+  presence.summary.subgroup.n <- presence.summary %>% group_by(SubGroup) %>% dplyr::summarise(n=n())
+  presence.summary.subgroup.mean <- presence.summary %>% group_by(SubGroup) %>% select(-c(n,species,SubGroup)) %>% dplyr::summarise_all(.funs = list(MEAN = ~ round(mean(x = .,na.rm=T),2)))
   presence.summary.subgroup <- full_join(presence.summary.subgroup.n,presence.summary.subgroup.mean,by="SubGroup")
   presence.summary.subgroup <- presence.summary.subgroup %>% rename_all(funs(gsub("_MEAN", "", .)))
 
