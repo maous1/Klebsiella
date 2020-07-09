@@ -12,7 +12,7 @@ extract.bacteria.table <- function(phylum)
   library(dplyr)
   proks <- reports("prokaryotes.txt")
   proks.selected <- proks%>%filter(Status=='Complete Genome'|Status=='Chromosome')
-  bacteria.table <- bacteria.table[grep(paste(phylum$taxonname,collapse='|'),bacteria.table$SubGroup,ignore.case = T),]
+  bacteria.table <- proks.selected[grep(paste(phylum$taxonname,collapse='|'),proks.selected$SubGroup,ignore.case = T),]
   bacteria.table$Organism <- unlist(lapply(strsplit(bacteria.table$Organism,split=' '),function(x) paste(x[1],x[2],sep=' ')))
   bacteria.table$Organism <- gsub(bacteria.table$Organism,pattern='\\[',replacement = '')
   bacteria.table$Organism <- gsub(bacteria.table$Organism,pattern='\\]',replacement = '.')

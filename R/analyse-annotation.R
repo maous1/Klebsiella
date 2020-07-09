@@ -12,7 +12,7 @@
 analyse.annotation <- function(bacteria.table,collicin,annotationDir)
 {
 
-  correspondance.organism.subgroup <- bacteria.table%>%group_by(Organism) %>% count(Organism, SubGroup) %>% slice(which.max(n)) %>% rename(species=Organism)
+  correspondance.organism.subgroup <- bacteria.table%>%group_by(Organism) %>% dplyr::count(Organism, SubGroup) %>% dplyr::slice(which.max(n)) %>% dplyr::rename(species=Organism)
 
   annotation.list <- list.files(annotationDir,full.names = T,recursive = T)
   annotation.list.name <- gsub(annotation.list,pattern = '.csv',replacement = '')
@@ -38,9 +38,9 @@ analyse.annotation <- function(bacteria.table,collicin,annotationDir)
 
   ##### summary at phylum level
 
-  presence.summary <- left_join(presence.summary,correspondance.organism.subgroup,by='species')
+  presence.summary <- correspondance.organism.subgroup %>% select(-n) %>% right_join(presence.summary,by='species')
   presence.summary.subgroup.n <- presence.summary %>% group_by(SubGroup) %>% summarise(n=n())
-  presence.summary.subgroup.mean <- presence.summary %>% group_by(SubGroup) %>% select(-c(n.x,n.y,species,SubGroup)) %>% summarise_all(.funs = list(MEAN = ~ round(mean(x = .,na.rm=T),2)))
+  presence.summary.subgroup.mean <- presence.summary %>% group_by(SubGroup) %>% select(-c(n,species,SubGroup)) %>% summarise_all(.funs = list(MEAN = ~ round(mean(x = .,na.rm=T),2)))
   presence.summary.subgroup <- full_join(presence.summary.subgroup.n,presence.summary.subgroup.mean,by="SubGroup")
   presence.summary.subgroup <- presence.summary.subgroup %>% rename_all(funs(gsub("_MEAN", "", .)))
 
