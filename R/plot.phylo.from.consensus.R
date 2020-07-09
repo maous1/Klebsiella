@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @examples
-plot.phylo.from.consensus <- function(consensusDir)
+phylo.from.consensus <- function(consensusDir)
 {
   filelist <- list.files(consensusDir,full.names = T)
 
