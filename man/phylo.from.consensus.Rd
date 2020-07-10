@@ -4,7 +4,7 @@
 \alias{phylo.from.consensus}
 \title{A function to plot phylogenetic tree of all genes based on fasta file in the consensus directory}
 \usage{
-phylo.from.consensus(consensusDir)
+phylo.from.consensus(consensusDir, bacteria.table)
 }
 \arguments{
 \item{consensusDir}{the directory with the consensus}
