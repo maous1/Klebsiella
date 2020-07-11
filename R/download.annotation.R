@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-download.annotation <- function(species,maxOrganism=20,indextostart,accessionDir,outDir)
+download.annotation <- function(species,indextostart,accessionDir,outDir)
 {
   library(reutils)
   library(ape)
@@ -21,17 +21,17 @@ download.annotation <- function(species,maxOrganism=20,indextostart,accessionDir
   accession.list <- list.files(accessionDir,full.names = T)
 
   n.species <- length(species)
-  for(i in indextostart:n.species)
+  for(i in 1:n.species)
   {
     dir.create(paste0(outDir,species[i]))
     accession <- read.csv(accession.list[grep(species[i],accession.list)],stringsAsFactors = F)
     accession  <- accession$accession
     accession <- accession[substr(accession,1,2)!='LR']
     N.accession <- length(accession)
-    for(j in 1:min(c(maxOrganism,N.accession)))
+    for(j in indextostart:N.accession)
     {
       current.accession <- accession[j]
-      current.accession <- strsplit(current.accession,split=':')[[1]]
+      current.accession <- strsplit(current.accession,split='-')[[1]]
       current.accession <- gsub(current.accession,pattern = ' ',replacement = '')
       N.chromosomes <- length(current.accession)
       full.annotation <- NULL
@@ -51,9 +51,9 @@ download.annotation <- function(species,maxOrganism=20,indextostart,accessionDir
       }
       if(class(full.annotation)=='data.frame')
       {
-        write.csv(full.annotation,paste0(outDir,species[i],'/',paste(current.accession[1:min(5,N.chromosomes)],collapse = ':'),'.csv'),row.names = F)
+        write.csv(full.annotation,paste0(outDir,species[i],'/',paste(current.accession[1:N.chromosomes],collapse = '-'),'.csv'),row.names = F)
       }
+      print(j)
     }
-  print(i)
   }
 }

@@ -6,7 +6,7 @@
 \usage{
 extract.all.genes.annotationbased(
   species,
-  collicin,
+  genemlst,
   annotationDir,
   genomeDir,
   outDir

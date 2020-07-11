@@ -8,7 +8,7 @@
 #' @return
 #' @export
 
-extract.all.genes.annotationbased <- function(species,collicin,annotationDir,genomeDir,outDir)
+extract.all.genes.annotationbased <- function(species,genemlst,annotationDir,genomeDir,outDir)
 {
   library(reutils)
   library(ape)
@@ -17,8 +17,7 @@ extract.all.genes.annotationbased <- function(species,collicin,annotationDir,gen
   library(dplyr)
 
   nspecies <- length(species)
-  collicin <- collicin$genename
-  ngenes <- length(collicin)
+  ngenes <- length(genemlst)
 
 
   for(i in 1:nspecies)
@@ -26,7 +25,7 @@ extract.all.genes.annotationbased <- function(species,collicin,annotationDir,gen
     dir.create(paste0(outDir,species[i]))
     for(j in 1:ngenes)
     {
-      extract.1.gene.annotationbased(selectedspecies=species[i],selectedgene=collicin[j],annotationDir=annotationDir,genomeDir=genomeDir,outDir=outDir)
+      extract.1.gene.annotationbased(selectedspecies=species[i],selectedgene=genemlst[j],annotationDir=annotationDir,genomeDir=genomeDir,outDir=outDir)
     }
     print(i)
   }
